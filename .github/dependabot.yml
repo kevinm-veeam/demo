@@ -1,3 +1,9 @@
+# Example configuration file that:
+#  - Disables version-updates
+#  - Applies custom labels
+#  - Adds reviewers and assignees
+#  - Group security updates for golang dependencies into a single pull request
+
 ---
 version: 2
 updates:
@@ -5,11 +11,46 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    labels:
+      - "Github Actions dependencies"
+      - "triage-board"
+    # Raise all npm pull requests for security updates with reviewers
+    reviewers:
+      - "kevinm-veeam"
+    # Raise all npm pull requests for security updates with assignees
+    assignees:
+      - "kevinm-veeam"
   - package-ecosystem: npm
     directory: "/javascript"
     schedule:
       interval: "weekly"
+    labels:
+      - "java dependencies"
+      - "triage-board"
+    # Raise all npm pull requests for security updates with reviewers
+    reviewers:
+      - "kevinm-veeam"
+    # Raise all npm pull requests for security updates with assignees
+    assignees:
+      - "kevinm-veeam"
   - package-ecosystem: bundler
     directory: "/ruby"
     schedule:
       interval: "weekly"
+    labels:
+      - "ruby dependencies"
+      - "triage-board"
+    # Raise all npm pull requests for security updates with reviewers
+    reviewers:
+      - "kevinm-veeam"
+    # Raise all npm pull requests for security updates with assignees
+    assignees:
+      - "kevinm-veeam"
+  - package-ecosystem: "gomod"
+    groups:
+      # Group security updates for golang dependencies
+      # into a single pull request
+      golang:
+        applies-to: security-updates
+        patterns:
+          - "golang.org*"
